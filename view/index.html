@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Movie Recommendation System</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- GridStack CSS -->
+  <link rel="stylesheet" href="node_modules/gridstack/dist/gridstack.min.css" />
+
+<style>
+  .grid-stack {
+    background: linear-gradient(to bottom, #2b2b2b, #1a1a1a); 
+    min-height: 80vh; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); 
+  }
+  #recommendBtn {
+  background: linear-gradient(to right, #20c997, #128f76);
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 10px 20px;
+  transition: background 0.3s ease, transform 0.3s ease;
+  }
+#clearAllBtn {
+    background: #495057;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+  }
+  #clearAllBtn:hover {
+    color: #20c997; 
+    transition: color 0.3s ease;
+    }
+  .grid-stack-item {
+    position: relative;
+    overflow: hidden; 
+  }
+  #search-input {
+    background: #2c2c2c;
+    color: #f8f9fa;
+    border: 1px solid #495057;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: inset 0 1px 3px rgba(156, 146, 146, 0.5);
+  }
+  #search-input::placeholder {
+  color: #868e96; 
+  opacity: 1;
+  }
+  body {
+  background: radial-gradient(circle at center, #2c2c2c, #121212 60%); 
+  background-attachment: fixed; 
+  color: #f8f9fa; 
+  }
+  #search-input:focus {
+    outline: none;
+    border-color: #20c997;
+    box-shadow: 0 0 8px rgba(32, 201, 151, 0.5); 
+  } 
+  .grid-stack-item-content, 
+.draggable-widget.newWidget {
+  background: linear-gradient(to bottom, #18bc9c, #128f76); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 6px; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); 
+}
+.grid-stack-item-content:hover,
+.draggable-widget.newWidget:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6); 
+}
+.widget-title-bar {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+.grid-stack-item .rating-banner,
+.draggable-widget.newWidget .rating-banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35px;
+  height: 50px;
+  background-color: #f1c40f; 
+  color: black;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  clip-path: polygon(
+    0% 0%, 
+    100% 0%, 
+    100% 100%, 
+    85% 100%, 
+    50% 75%, 
+    15% 100%, 
+    0% 100%
+  );
+  z-index: 5;
+}
+      .input-group-text {
+        background: #1a1a1a; 
+        border: none; 
+        padding: 0; 
+        display: flex; 
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px; 
+        height: 40px; 
+        width: 40px; 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); 
+      }
+      #search-button {
+        background: none; 
+        border: none; 
+        width: 100%; 
+        height: 100%; 
+        color: #f8f9fa; 
+        cursor: pointer; 
+        font-size: 20px;
+      }
+      #search-button:hover {
+        color: #20c997; 
+        transition: color 0.3s ease; 
+      }
+      .modal-content
+      {
+        background: linear-gradient(to bottom, #2b2b2b, #1a1a1a);
+      }
+      .scroll-container {
+        max-height: 80vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: #1a1a1a; 
+        padding: 10px; 
+        border: 1px solid #343a40; 
+        border-radius: 8px;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5); 
+      }
+      .btn {
+        color: #fff;
+        background-color: #495057; 
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: background 0.3s ease, transform 0.3s ease; 
+      }
+      .btn:hover {
+        color: #20c997; 
+        transition: color 0.3s ease; 
+      }
+      .draggable-widget {
+        width: 100px;
+        height: 150px;
+        background-color: #ccc;
+        margin: 0 auto 1rem auto; 
+        padding: 2px;
+        cursor: move;
+        border: 1px solid #999;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: bold;
+      }
+  
+      .trash {
+        min-height: 80%;
+        border: 2px dashed #ccc;
+        border-radius: 4px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #e9ecef;
+        background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
+        margin-top: 20px; 
+      }
+    </style>
+</head>
+
+<body>
+  <div class="container-fluid p-4 ">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="mb-3">
+          <div class="d-flex mb-2">
+            <button type="button" class="btn btn-sm btn-primary me-2" id="search-switch" title="Movie">
+              <i class="bi bi-film"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" id="search-switch" title="Actor">
+              <i class="bi bi-person-bounding-box"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" id="search-switch" title="Director">
+              <i class="bi bi-camera-reels"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" title="Gear">
+              <i class="bi bi-gear"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" title="Misc">
+              <i class="bi bi-three-dots"></i>
+            </button>
+          </div>
+          
+          <div class="input-group">
+            <input 
+              type="text" 
+              id="search-input" 
+              data-type="movie"
+              class="form-control" 
+              placeholder="Search..." 
+              aria-label="Search..."
+            />
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <button class="btn btn-sm bi bi-search" id="search-button"></button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-container gs-3" id="scroll-grid">
+          <div class="row" id="replace">                           
+          </div>
+        </div>
+      </div>
+
+<div class="col-md-8">
+  <div class="grid-stack grid-stack-item grid-stack-sub-grid ui-droppable" id="advanced-grid"></div>
+
+  <div class="d-flex justify-content-between mt-3">
+    <div class="align-self-start">
+      <button id="clearAllBtn"
+              type="button"
+              class="btn btn-outline-secondary btn-lg px-4"
+              style="font-weight: bold;">
+        <i class="bi bi-brush"></i>
+        Clear
+      </button>
+    </div>
+
+
+    <div class="flex-grow-1 d-flex justify-content-center">
+      <button id="recommendBtn" type="button" 
+              class="btn btn-success btn-lg px-5"
+              style="background: #20c997; border: none; font-weight: bold;">
+        Recommend
+      </button>
+    </div>
+  </div>
+</div>
+      <div class="col-md-1">
+        <div id="trash" class="trash">
+          <i class="bi bi-trash" style="font-size: 1.5rem; margin-right: 5px;"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GridStack JS -->
+  <script src="node_modules/gridstack/dist/gridstack-all.js"></script>
+  <!-- Bootstrap JS (bundle includes Popper) -->
+  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1) Initialize the GridStack on the right, making the trash removable
+      const grid = GridStack.init({
+        float: true,      // let them float instead of auto-position
+        acceptWidgets: true,
+        removable: '#trash', // makes the #trash area remove items
+        //columnWidth: 20,
+        //cellHeight: 150,
+        margin: '10px',
+      }, '#advanced-grid');
+
+      window.grid = grid; 
+  // Setup drag-in for draggable widgets
+  GridStack.setupDragIn('.scroll-container > .row > .col-6 > .grid-stack-item', {
+  width: 3,  // grid columns
+  height: 2, // grid rows
+  });
+ 
+  const clearAllBtn = document.getElementById('clearAllBtn');
+
+  clearAllBtn.addEventListener('click', function () {
+    // Confirm action before clearing
+    const confirmClear = confirm('Are you sure you want to clear the entire dashboard?');
+    if (confirmClear) {
+      const gridElement = document.getElementById('advanced-grid');
+      const grid = GridStack.init({}, gridElement);
+      // Remove all widgets from the grid
+      grid.removeAll();
+    }
+  });
+
+    });
+  </script>
+<script src="static/search.js"></script>
+<script src="static/recommendBtn.js"></script>
+
+<div class="modal fade" id="recommendModal" tabindex="-1" aria-labelledby="recommendModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"> 
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="recommendModalLabel">Recommended Movies</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="recommendationContent" class="row">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="movieDetailsModal" tabindex="-1" aria-labelledby="movieDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="movieDetailsModalLabel">Movie Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="movieDetailsContent">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+#P57 Director x
+#P161 Cast Member x
+#P136 Genre x
+#P577 Publication Date x
+#P162 Producer
+#P1431 Executive Producer
+#P58 Screenwriter
+#P144 Based On
+#P495 Country Of Origin
+#P915 Filming Location
+#P840 Narrative Location
+#P344 Director of Photography
+#P345 IMDB ID x
+#P2408 Set in period
+#P2047 Duration
+#P1040 Film editor
+#P921 Main subject x
+#P750 Distributed by
+#P2515 Costume designer
+#P2554 Production Designer
+#P2142 Box office
+#P2208 Average shot length
+#P2755 Exploitation Mark Number
+#P3803 Original Film Format
+#P3816 Film Script
+#P1476 Title
+#P676 lyricist
+#P364 Original Language 
+#P166 Award Received
+#P8345 Media Franchise
+#P179 Part of the series
+#P2769 Budget
+#P272 Production Company
+#P4805 Make up artist
+#P2130 Capital cost
+#P462 Color
+#P1258 Rotten Tomatoes ID
+#P1411 Nominated for

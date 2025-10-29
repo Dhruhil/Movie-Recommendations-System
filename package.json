@@ -1,0 +1,16 @@
+{
+  "name": "semanticproject",
+  "version": "1.0.0",
+  "description": "Our main objective is to create a Movie Recommendation System utilizing SparQL and appropiate knowledge graphs such as Wikidata, And Infering some hidden relationships using rdfLIB. Fetching updated movie ratings from appropiate APIs, Using Flask to host the webpage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "gridstack": "^11.1.2"
+  }
+}

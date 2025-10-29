@@ -1,0 +1,4 @@
+flask
+SPARQLWrapper
+rdflib
+rapidfuzz
